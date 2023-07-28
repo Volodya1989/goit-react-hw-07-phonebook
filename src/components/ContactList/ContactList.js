@@ -1,31 +1,41 @@
+import { useEffect } from "react";
+import { fetchContacts } from "redux/operations";
+import { getContacts } from "redux/selectors";
 import ContactListItem from "components/ContactListItem";
 import { List, Text, Span } from "./ContactList.styled";
 import { FcContacts } from "react-icons/fc";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "redux/contactsSlice";
+import { deleteContact } from "redux/operations";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { getContacts } from "redux/contactsSlice";
-import { getFilter } from "redux/filterSlice";
+import { getFilter } from "redux/selectors";
 
 const ContactList = () => {
   const dispatch = useDispatch();
+  const { items, isLoading, error } = useSelector(getContacts);
 
-  const contactsMain = useSelector(getContacts);
   const filter = useSelector(getFilter);
+  console.log("filter", useSelector(getFilter));
 
-  const filteredContacts = contactsMain[0].filter((contact) =>
-    contact.name.toLowerCase().includes(filter.value.toLocaleLowerCase())
+  const filteredContacts = items.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLocaleLowerCase())
   );
+  console.log("filteredContacts", filteredContacts.length);
+  useEffect(() => {
+    console.log(dispatch(fetchContacts()));
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <List>
+      {isLoading && <b>Loading tasks...</b>}
+      {error && <b>{error}</b>}
       {filteredContacts.length > 0 ? (
-        filteredContacts.map(({ name, number, id }) => {
+        items.map(({ name, phone, id }) => {
           return (
             <ContactListItem
               key={id}
               name={name}
-              number={number}
+              number={phone}
               onDelete={() => dispatch(deleteContact(id))}
             />
           );

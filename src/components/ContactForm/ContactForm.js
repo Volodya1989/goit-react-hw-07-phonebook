@@ -1,17 +1,17 @@
 import { Input, Label, Button } from "./ContactForm.styled";
 import { useDispatch } from "react-redux";
-import { addContact } from "redux/contactsSlice";
+import { addContact } from "redux/operations";
 
 const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    const { name, number } = e.currentTarget.elements;
+    const { name, phone } = e.target.elements;
+    console.log(name.value, phone.value);
+    dispatch(addContact(name.value, phone.value));
 
-    dispatch(addContact(name.value, number.value));
-
-    e.currentTarget.reset();
+    e.target.reset();
   };
 
   return (
@@ -31,7 +31,7 @@ const ContactForm = () => {
           Number
           <Input
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required

@@ -1,11 +1,12 @@
 import { Input, Label } from "./Filter.styled";
 import { useDispatch } from "react-redux";
 import { setFilter } from "redux/filterSlice";
-import { getFilter } from "redux/filterSlice";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { getFilter } from "redux/selectors";
 
 const Filter = () => {
   const filter = useSelector(getFilter);
+
   const dispatch = useDispatch();
   const changeFilter = (e) => {
     dispatch(setFilter(e.currentTarget.value));
@@ -16,7 +17,7 @@ const Filter = () => {
       <Input
         type="text"
         name="filter"
-        value={filter.value}
+        value={filter}
         onChange={changeFilter}
         required
       />
