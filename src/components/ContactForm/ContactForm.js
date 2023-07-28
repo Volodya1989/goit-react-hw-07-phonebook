@@ -8,7 +8,6 @@ const ContactForm = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const { name, phone } = e.target.elements;
-    console.log(name.value, phone.value);
     dispatch(addContact(name.value, phone.value));
 
     e.target.reset();

@@ -14,14 +14,15 @@ const ContactList = () => {
   const { items, isLoading, error } = useSelector(getContacts);
 
   const filter = useSelector(getFilter);
-  console.log("filter", useSelector(getFilter));
 
   const filteredContacts = items.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLocaleLowerCase())
   );
+  console.log("filter", filter);
+
   console.log("filteredContacts", filteredContacts.length);
+
   useEffect(() => {
-    console.log(dispatch(fetchContacts()));
     dispatch(fetchContacts());
   }, [dispatch]);
 
