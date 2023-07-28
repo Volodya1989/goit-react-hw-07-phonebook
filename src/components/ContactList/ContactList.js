@@ -31,7 +31,7 @@ const ContactList = () => {
       {isLoading && <b>Loading tasks...</b>}
       {error && <b>{error}</b>}
       {filteredContacts.length > 0 ? (
-        items.map(({ name, phone, id }) => {
+        filteredContacts.map(({ name, phone, id }) => {
           return (
             <ContactListItem
               key={id}
