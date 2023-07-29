@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { fetchContacts } from "redux/operations";
 import { getContacts } from "redux/selectors";
 import ContactListItem from "components/ContactListItem";
 import { List, Text, Span } from "./ContactList.styled";
@@ -16,15 +14,8 @@ const ContactList = () => {
   const filter = useSelector(getFilter);
 
   const filteredContacts = items.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLocaleLowerCase())
+    contact.name.toLowerCase().includes(filter.toLocaleLowerCase().trim())
   );
-  console.log("filter", filter);
-
-  console.log("filteredContacts", filteredContacts.length);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
 
   return (
     <List>

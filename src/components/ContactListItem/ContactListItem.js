@@ -12,7 +12,7 @@ const ContactListItem = ({ number, name, onDelete }) => {
         {name}: <Phone>{number}</Phone>
       </Text>
 
-      <DeleteBtn type="button" onClick={onDelete}>
+      <DeleteBtn type="button" onClick={() => onDelete()}>
         Delete
       </DeleteBtn>
     </Item>

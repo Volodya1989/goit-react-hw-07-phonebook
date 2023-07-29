@@ -1,14 +1,25 @@
 import { Input, Label, Button } from "./ContactForm.styled";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "redux/operations";
+import { getContacts } from "redux/selectors";
+import Notiflix from "notiflix";
 
 const ContactForm = () => {
   const dispatch = useDispatch();
+  const { items } = useSelector(getContacts);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const { name, phone } = e.target.elements;
-    dispatch(addContact(name.value, phone.value));
+    const isPresentOnList = items.find(
+      (contact) => contact.name.toLowerCase() === name.value.toLowerCase()
+    );
+    if (isPresentOnList) {
+      Notiflix.Notify.failure(`${name.value} is already in your contacts.`);
+    } else {
+      Notiflix.Notify.success(`${name.value} ADDED to your contact list.`);
+      dispatch(addContact({ name: name.value, phone: phone.value }));
+    }
 
     e.target.reset();
   };
